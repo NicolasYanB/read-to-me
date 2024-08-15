@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    shm_size: 144mb
+    environment:
+      POSTGRESS_PASSWORD: postgres
+      POSTGRES_USER: nicolas
+      POSTGRES_DB: read-to-me-db
+    ports:
+      - "58866:5432"
+    volumes:
+      - ../data:/var/lib/postgresql
+  app:
+    build: .
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    ports:
+      - "8000:8000"
+    environment:
+      DB_USER: nicolas
+      DB_PASSWORD: postgres
+      DB_NAME: read-to-me-db
+    depends_on:
+      - db
