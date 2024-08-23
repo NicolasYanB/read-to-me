@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
+
+:root {
+  --snow: #FBF5F3;
+  --cambridge-blue: #8DAA9D;
+  --claret: #7B0828;
+  --night: #0F0E0E;
+}
+
+html {
+  font-family: "ABeeZee", sans-serif;
+}
+
+body {
+  background-color: var(--snow);
+}
+
+button {
+  all: unset;
+}
+
+header {
+  background-color: var(--cambridge-blue);
+  border-radius: 1em;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  margin: 0 1em;
+}
+
+.login-btn {
+  background-color: var(--night);
+  color: white;
+  font-size: 1.2rem;
+  padding: .5em 1.5em;
+  border-radius: 1em;
+}
+
+.login-btn-container {
+  align-self: center;
+}
