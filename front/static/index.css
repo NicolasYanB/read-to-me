@@ -82,7 +82,6 @@ main {
 .url-input {
   background-color: white;
   box-shadow: #00000050 0 .1em .1em;
-  width: 15em;
   font-size: 1.2rem;
   color: var(--night);
   padding: .4em .1em;
@@ -105,7 +104,8 @@ textarea {
   resize: none;
   font-size: 1rem;
   padding-left: .4em;
-  width:fit-content;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .content-form {
