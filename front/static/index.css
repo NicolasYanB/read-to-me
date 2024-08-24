@@ -1,3 +1,5 @@
+/** General **/
+
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
 
 :root {
@@ -5,6 +7,7 @@
   --cambridge-blue: #8DAA9D;
   --claret: #7B0828;
   --night: #0F0E0E;
+  --silver: #ABABAB;
 }
 
 html {
@@ -15,20 +18,15 @@ body {
   background-color: var(--snow);
 }
 
-button {
+button, input {
   all: unset;
 }
 
-header {
-  background-color: var(--cambridge-blue);
-  border-radius: 1em;
-  display: flex;
-  justify-content: space-between;
-  padding: 1em;
+main, header {
   margin: 0 1em;
 }
 
-.login-btn {
+.btn {
   background-color: var(--night);
   color: white;
   font-size: 1.2rem;
@@ -36,6 +34,88 @@ header {
   border-radius: 1em;
 }
 
+::placeholder {
+  color: var(--silver);
+}
+
+/** Header **/
+
+header {
+  background-color: var(--cambridge-blue);
+  border-radius: 1em;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+}
+
 .login-btn-container {
   align-self: center;
+}
+
+/** Main **/
+
+main {
+  margin-top: 1em;
+}
+
+/* Upload file box */
+
+.file-upload {
+  width: fit-content;
+  border: 2px var(--silver) dashed;
+}
+
+.file-upload-inner {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-text {
+  color: var(--silver);
+  font-size: 1.2rem;
+}
+
+/* url input form */
+
+.url-input {
+  background-color: white;
+  box-shadow: #00000050 0 .1em .1em;
+  width: 15em;
+  font-size: 1.2rem;
+  color: var(--night);
+  padding: .4em .1em;
+  width: 20em;
+}
+
+.extract-btn {
+  margin-left: 1em;
+  font-size: 1rem;
+}
+
+.extract-form {
+  margin-top: 2em;
+}
+
+
+/* Text area */
+
+textarea {
+  resize: none;
+  font-size: 1rem;
+  padding-left: .4em;
+  width:fit-content;
+}
+
+.content-form {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.generate-btn {
+  width: fit-content;
+  align-self: center;
+  margin-top: 1em;
 }
