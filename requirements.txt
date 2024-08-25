@@ -1,2 +1,6 @@
 django==5.1
 psycopg==3.2.1
+readability_lxml==0.8.1
+beautifulsoup4==4.12.3
+Requests==2.32.3
+lxml_html_clean==0.2.0
