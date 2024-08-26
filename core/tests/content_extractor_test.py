@@ -10,3 +10,9 @@ class ContentExtractorTestCase(TestCase):
   def test_invalid_response(self):
     url = 'https://catfact.ninja/fact'
     self.assertRaises(Exception, lambda _: get_main_content(url))
+
+  def test_invalid_url(self):
+    url1 = 'qwerqwerqwer'
+    url2 = 'https://uytfghgdc'
+    self.assertRaises(Exception, lambda _: get_main_content(url1))
+    self.assertRaises(Exception, lambda _: get_main_content(url2))
