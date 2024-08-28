@@ -23,5 +23,6 @@ services:
       DB_USER: nicolas
       DB_PASSWORD: postgres
       DB_NAME: read-to-me-db
+      TTS_HOME: /
     depends_on:
       - db
