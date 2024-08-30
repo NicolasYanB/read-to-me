@@ -1,1 +1,2 @@
 from .content_extractor_test import ContentExtractorTestCase
+from .text_to_speech_test import TextToSpeechTestCase
