@@ -1,8 +1,9 @@
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 
 from .services.content_extractor import get_main_content
+from .services.text_to_speech import TextToSpeech
 
 @require_http_methods(['GET'])
 def extract(request):
@@ -21,4 +22,11 @@ def generate(request):
   content = request.POST.get('content')
   if content is None or content == '':
     return JsonResponse({'message': 'Text content not found'}, status=400)
-  return JsonResponse({})
+  
+  text_to_speech = TextToSpeech()
+  raw_wav = text_to_speech.generate_speech(content)
+  audio_rate = text_to_speech.output_sample_rate
+  wav_buffer = text_to_speech.serialize_wav(raw_wav, sample_rate=audio_rate)
+  wav_buffer.seek(0)
+  
+  return FileResponse(wav_buffer)

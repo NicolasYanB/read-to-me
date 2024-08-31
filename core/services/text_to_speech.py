@@ -16,6 +16,9 @@ def disable_print_wrapper(caller, *args, **kwargs):
 class TextToSpeech:
   model = disable_print_wrapper(TTS, 'tts_models/multilingual/multi-dataset/xtts_v2', gpu=False)
 
+  def __init__(self):
+    self.output_sample_rate = TextToSpeech.model.synthesizer.output_sample_rate
+
   def generate_speech(self, text: str) -> np.ndarray:
     wav = disable_print_wrapper(
       TextToSpeech.model.tts,
@@ -26,11 +29,12 @@ class TextToSpeech:
 
     return wav
   
-  def serialize_wav(self, wav: np.ndarray):
-    wav_norm = wav * (32767 / max(0.01, np.max(np.abs(wav))))
-    wav_norm = wav.astype(np.int16)
+  def serialize_wav(self, wav: list, sample_rate: int = 44100) -> BytesIO:
+    MAX_AMP = 32767
+
+    wav_norm = np.array(wav) * (MAX_AMP / max(0.01, np.max(np.abs(wav))))
+    wav_norm = wav_norm.astype(np.int16)
     wav_buffer = BytesIO()
-    SAMPLE_RATE = 44100
-    wavfile.write(wav_buffer, SAMPLE_RATE, wav_norm)
+    wavfile.write(wav_buffer, sample_rate, wav_norm)
     wav_buffer.seek(0)
     return wav_buffer
