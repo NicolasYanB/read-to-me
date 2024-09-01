@@ -24,7 +24,9 @@ def generate(request):
     return JsonResponse({'message': 'Text content not found'}, status=400)
   
   text_to_speech = TextToSpeech()
-  raw_wav = text_to_speech.generate_speech(content)
+  language = text_to_speech.detect_language(content)
+  language = language if language in text_to_speech.languages else 'en'
+  raw_wav = text_to_speech.generate_speech(content, language=language)
   audio_rate = text_to_speech.output_sample_rate
   wav_buffer = text_to_speech.serialize_wav(raw_wav, sample_rate=audio_rate)
   wav_buffer.seek(0)

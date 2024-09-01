@@ -49,3 +49,13 @@ class TextToSpeechTestCase(TestCase):
     wav_duration = get_wave_duration(wav_buffer)
     test_duration = get_wave_duration(str(path / 'test.wav'))
     self.assertEqual(wav_duration, test_duration)
+
+  def test_language_detection(self):
+    text1 = 'this is an english text'
+    text2 = 'esse é um texto em português'
+
+    lang1 = TextToSpeechTestCase.tts.detect_language(text1)
+    lang2 = TextToSpeechTestCase.tts.detect_language(text2)
+
+    self.assertEqual(lang1, 'en')
+    self.assertEqual(lang2, 'pt')
