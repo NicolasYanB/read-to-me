@@ -1,5 +1,5 @@
 from django.test import TestCase
-from ..services.content_extractor import get_main_content
+from ..services.content_extractor import get_main_content, UrlException
 
 class ContentExtractorTestCase(TestCase):
   def test_fetch_main_body(self):
@@ -9,10 +9,10 @@ class ContentExtractorTestCase(TestCase):
 
   def test_invalid_response(self):
     url = 'https://catfact.ninja/fact'
-    self.assertRaises(Exception, lambda _: get_main_content(url))
+    self.assertRaises(UrlException, lambda: get_main_content(url))
 
   def test_invalid_url(self):
     url1 = 'qwerqwerqwer'
     url2 = 'https://uytfghgdc'
-    self.assertRaises(Exception, lambda _: get_main_content(url1))
-    self.assertRaises(Exception, lambda _: get_main_content(url2))
+    self.assertRaises(UrlException, lambda: get_main_content(url1))
+    self.assertRaises(UrlException, lambda: get_main_content(url2))

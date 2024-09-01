@@ -1,11 +1,21 @@
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, FileResponse
+from django.http import JsonResponse, FileResponse, HttpResponse
 
-from .services.content_extractor import get_main_content
+from .services.content_extractor import get_main_content, UrlException
 from .services.text_to_speech import TextToSpeech
 
+def catch_error(view):
+  def catch(request):
+    try:
+      return view(request)
+    except Exception as e:
+      print(str(e))
+      return HttpResponse(status=500)
+  return catch
+
 @require_http_methods(['GET'])
+@catch_error
 def extract(request):
   url = request.GET.get('url')
   if url is None:
@@ -13,11 +23,12 @@ def extract(request):
   try:
     content = get_main_content(url)
     return JsonResponse({"content": content})
-  except Exception:
+  except UrlException:
     return JsonResponse({'message': f'There is something wrong with the URL {url}'}, status=400)
   
 @require_http_methods(['POST'])
 @csrf_exempt
+@catch_error
 def generate(request):
   content = request.POST.get('content')
   if content is None or content == '':
