@@ -1,3 +1,4 @@
+from typing import Callable, Any
 from io import BytesIO
 import contextlib
 import warnings
@@ -11,7 +12,7 @@ import torch
 
 warnings.filterwarnings('ignore')
 
-def disable_print(caller, *args, **kwargs):
+def disable_print(caller: Callable, *args, **kwargs) -> Any:
   with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f):
     return caller(*args, **kwargs)
 
@@ -19,14 +20,14 @@ class TextToSpeech:
   model = disable_print(TTS, 'tts_models/multilingual/multi-dataset/xtts_v2', gpu=torch.cuda.is_available())
 
   def __init__(self):
-    self.output_sample_rate = TextToSpeech.model.synthesizer.output_sample_rate
-    self.languages = TextToSpeech.model.languages
+    self.output_sample_rate: int = TextToSpeech.model.synthesizer.output_sample_rate
+    self.languages: list[str] = TextToSpeech.model.languages
 
   def detect_language(self, text: str) -> str:
     lang = detect(text)
     return lang
 
-  def generate_speech(self, text: str, language: str = 'en') -> list[int]:
+  def generate_speech(self, text: str, language: str = 'en') -> list[float]:
     wav = disable_print(
       TextToSpeech.model.tts,
       text,
@@ -36,7 +37,7 @@ class TextToSpeech:
 
     return wav
   
-  def serialize_wav(self, wav: list[int], sample_rate: int = 44100) -> BytesIO:
+  def serialize_wav(self, wav: list[float], sample_rate: int = 44100) -> BytesIO:
     MAX_AMP = 32767
 
     wav_norm = np.array(wav) * (MAX_AMP / max(0.01, np.max(np.abs(wav))))

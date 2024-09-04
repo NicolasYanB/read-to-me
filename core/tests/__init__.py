@@ -1,2 +1,4 @@
 from .content_extractor_test import ContentExtractorTestCase
 from .text_to_speech_test import TextToSpeechTestCase
+from .save_speaker_file_test import SaveSpeakerFileTest
+from .wav_duration_test import WavDurationTest

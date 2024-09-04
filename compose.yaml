@@ -4,7 +4,7 @@ services:
     restart: always
     shm_size: 144mb
     environment:
-      POSTGRESS_PASSWORD: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_USER: nicolas
       POSTGRES_DB: read-to-me-db
     ports:

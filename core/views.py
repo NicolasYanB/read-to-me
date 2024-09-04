@@ -1,12 +1,14 @@
+from typing import Callable
+
+from django.http import JsonResponse, FileResponse, HttpResponse, HttpRequest
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, FileResponse, HttpResponse
 
 from .services.content_extractor import get_main_content, UrlException
 from .services.text_to_speech import TextToSpeech
 
-def catch_error(view):
-  def catch(request):
+def catch_error(view: Callable) -> Callable:
+  def catch(request: HttpRequest):
     try:
       return view(request)
     except Exception as e:
@@ -16,7 +18,7 @@ def catch_error(view):
 
 @require_http_methods(['GET'])
 @catch_error
-def extract(request):
+def extract(request: HttpRequest):
   url = request.GET.get('url')
   if url is None:
     return JsonResponse({'message': 'URL not defined'}, status=400)
@@ -29,7 +31,7 @@ def extract(request):
 @require_http_methods(['POST'])
 @csrf_exempt
 @catch_error
-def generate(request):
+def generate(request: HttpRequest):
   content = request.POST.get('content')
   if content is None or content == '':
     return JsonResponse({'message': 'Text content not found'}, status=400)
