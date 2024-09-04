@@ -1,4 +1,5 @@
-from typing import Callable, Any
+from typing import Callable, Any, Union
+from pathlib import Path
 from io import BytesIO
 import contextlib
 import warnings
@@ -27,12 +28,18 @@ class TextToSpeech:
     lang = detect(text)
     return lang
 
-  def generate_speech(self, text: str, language: str = 'en') -> list[float]:
+  def generate_speech(self, text: str, language: str = 'en', speaker_path: Union[Path, None] = None) -> list[float]:
+    speaker_arg = {}
+    if speaker_path is None:
+      speaker_arg['speaker'] = 'Claribel Dervla'
+    else:
+      speaker_arg['speaker_wav'] = str(speaker_path)
+
     wav = disable_print(
       TextToSpeech.model.tts,
       text,
       language=language,
-      speaker='Claribel Dervla'
+      **speaker_arg
     )
 
     return wav

@@ -17,6 +17,12 @@ class TextToSpeechTestCase(TestCase):
     raw_wav = TextToSpeechTestCase.tts.generate_speech(text)
     self.assertIsInstance(raw_wav, list)
 
+  def test_wav_generation_with_speaker(self):
+    test_speaker_path = STATIC_PATH / 'test/speaker.wav'
+    text = 'Hello World!'
+    raw_wav = TextToSpeechTestCase.tts.generate_speech(text, speaker_path=test_speaker_path)
+    self.assertIsInstance(raw_wav, list)
+
   def test_audio_serialization(self):
     """
     Test the wav generation by comparing the duration of buffer generated from

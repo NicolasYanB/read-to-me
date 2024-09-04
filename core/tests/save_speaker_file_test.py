@@ -3,7 +3,8 @@ import os
 
 from django.test import TestCase
 
-from ..services.utils import SpeakerHandler, get_wave_duration, UnsupportedFileException, STATIC_PATH
+from ..services.speaker_handler import SpeakerHandler, UnsupportedFileException
+from ..services.utils import get_wave_duration, STATIC_PATH
 
 TEST_PATH = STATIC_PATH / 'test'
 
