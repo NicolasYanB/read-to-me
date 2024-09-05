@@ -39,6 +39,9 @@ def generate(request: HttpRequest):
   
   if content is None or content == '':
     return JsonResponse({'message': 'Text content not found'}, status=400)
+
+  # removing multipart/form-data boundary string
+  content = re.sub('.+$', '', content)
   
   speaker_handler = None
   if speaker_file is not None:
