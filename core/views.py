@@ -35,10 +35,11 @@ def extract(request: HttpRequest):
 @catch_error
 def generate(request: HttpRequest):
   content = request.POST.get('content')
+  speaker_file = request.FILES.get('speaker')
+  
   if content is None or content == '':
     return JsonResponse({'message': 'Text content not found'}, status=400)
   
-  speaker_file = request.FILES.get('speaker')
   speaker_handler = None
   if speaker_file is not None:
     speaker_audio = speaker_file.read()

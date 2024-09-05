@@ -3,8 +3,8 @@ from io import BytesIO
 from django.test import TestCase
 import numpy as np
 
-from ..services.text_to_speech import TextToSpeech
 from ..services.utils import STATIC_PATH, get_wave_duration
+from ..services.text_to_speech import TextToSpeech
 
 class TextToSpeechTestCase(TestCase):
   @classmethod

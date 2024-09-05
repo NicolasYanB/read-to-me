@@ -31,7 +31,12 @@
       <button class="btn extract-btn" onclick="get_url_content()">Extract</button>
     </div>
     <div class="content-form">
-      <textarea name="content" id="content" rows="30" cols="140" placeholder="Put your text to be transformed in audio here..."></textarea>
+      <div class="textarea-div">
+        <div class="spinner-div" style="visibility: hidden" id="spinner-div">
+          <span class="loader"></span>
+        </div>
+        <textarea name="content" id="content" rows="30" cols="140" placeholder="Put your text to be transformed in audio here..."></textarea>
+      </div>
       <button class="btn generate-btn">Generate</button>
     </div>
   </main>
