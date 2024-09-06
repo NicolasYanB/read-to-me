@@ -84,7 +84,7 @@ function set_file_name(filename) {
 
 function handle_file_selection() {
   const file_input = document.getElementById('file');
-  const file = file_input.files[0];
+  const file = file_input.files[file_input.files.length - 1];
   audio_file = file;
   set_file_name(file.name);
 }
@@ -97,5 +97,13 @@ function handle_drop(event) {
 }
 
 function handle_dragover(event) {
+  event.preventDefault();
+}
+
+function remove_file(event) {
+  const file_name = document.getElementById('file-name');
+  audio_file = null;
+  file_name.innerText = "No file chosen";
+  file_name.style.textDecoration = 'none';
   event.preventDefault();
 }

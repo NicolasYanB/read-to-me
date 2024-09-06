@@ -91,6 +91,20 @@ main {
   display: flex;
 }
 
+.close-icon, .file-name {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.close-icon {
+  position: relative;
+  left: 2em;
+}
+
+.close-icon > svg:hover {
+  fill: var(--claret)
+}
+
 /* audio player */
 audio {
   margin-top: 2em;
