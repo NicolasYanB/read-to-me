@@ -25,5 +25,6 @@ services:
       DB_NAME: read-to-me-db
       TTS_HOME: /
       PYTHONUNBUFFERED: 1
+      DEBUG: 1
     depends_on:
       - db

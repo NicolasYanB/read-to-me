@@ -1,5 +1,7 @@
 from typing import Callable
+import traceback
 import re
+import os
 
 from django.http import JsonResponse, FileResponse, HttpResponse, HttpRequest
 from django.views.decorators.http import require_http_methods
@@ -14,7 +16,10 @@ def catch_error(view: Callable) -> Callable:
     try:
       return view(request)
     except Exception as e:
-      print(str(e))
+      if os.environ('DEBUG') == 1:
+        print(traceback.format_exc())
+      else:
+        print(str(e))
       return HttpResponse(status=500)
   return catch
 
@@ -39,9 +44,6 @@ def generate(request: HttpRequest):
   
   if content is None or content == '':
     return JsonResponse({'message': 'Text content not found'}, status=400)
-
-  # removing multipart/form-data boundary string
-  content = re.sub('.+$', '', content)
   
   speaker_handler = None
   if speaker_file is not None:

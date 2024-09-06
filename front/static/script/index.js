@@ -1,4 +1,5 @@
 const host = 'http://localhost:8000';
+let audio_file = null;
 
 function get_url_content() {
   const url_input = document.getElementById('url');
@@ -20,7 +21,7 @@ function get_url_content() {
       if (response.status == 400) {
         alert(payload.message);
       } else if (response.status == 500) {
-        alert('Houve um erro no servidor');
+        alert('Oops, there was an error on the server!');
       } else if (response.ok) {
         content_textarea.value = payload.content;
       }
@@ -43,14 +44,14 @@ function get_generated_audio() {
   }
 
   const endpoint = `${host}/api/generate`;
-  const body = new FormData()
+  const body = new FormData();
   body.append("content", textarea.value);
+  if (audio_file != null) {
+    body.append('speaker', audio_file, audio_file.name);
+  }
 
   const request = {
     method: 'POST',
-    headers: {
-      "Content-Type": "multipart/form-data;boundary=<calculated when request is sent>"
-    },
     body: body
   }
 
@@ -61,7 +62,7 @@ function get_generated_audio() {
     if (response.status == 400) {
       response.json().then(data => alert(data.message));
     } else if (response.status == 500) {
-      alert('Houve um erro no servidor');
+      alert('Oops, there was an error on the server!');
     } else if (response.ok) {
       response.blob().then(binary => {
         const audio_url = URL.createObjectURL(binary);
@@ -73,4 +74,28 @@ function get_generated_audio() {
     generate_button.disabled = false;
     spinner_div.style.visibility = "hidden";
   })
+}
+
+function set_file_name(filename) {
+  const file_name = document.getElementById('file-name');
+  file_name.innerText = filename;
+  file_name.style.textDecoration = 'underline';
+}
+
+function handle_file_selection() {
+  const file_input = document.getElementById('file');
+  const file = file_input.files[0];
+  audio_file = file;
+  set_file_name(file.name);
+}
+
+function handle_drop(event) {
+  const file = event.dataTransfer.items[0].getAsFile();
+  audio_file = file;
+  set_file_name(file.name);
+  event.preventDefault();
+}
+
+function handle_dragover(event) {
+  event.preventDefault();
 }
