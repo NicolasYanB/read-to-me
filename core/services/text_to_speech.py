@@ -18,17 +18,19 @@ def disable_print(caller: Callable, *args, **kwargs) -> Any:
     return caller(*args, **kwargs)
 
 class TextToSpeech:
-  model = disable_print(TTS, 'tts_models/multilingual/multi-dataset/xtts_v2', gpu=torch.cuda.is_available())
-
   def __init__(self):
-    self.output_sample_rate: int = TextToSpeech.model.synthesizer.output_sample_rate
-    self.languages: list[str] = TextToSpeech.model.languages
+    self._model = disable_print(TTS, 'tts_models/multilingual/multi-dataset/xtts_v2', gpu=torch.cuda.is_available())
+    self.output_sample_rate: int = self._model.synthesizer.output_sample_rate
+    self.languages: list[str] = self._model.languages
 
   def detect_language(self, text: str) -> str:
     lang = detect(text)
     return lang
 
   def generate_speech(self, text: str, language: str = 'en', speaker_path: Union[Path, None] = None) -> list[float]:
+    if os.environ.get('DEBUG') == '1':
+      print('Generation started...')
+      
     speaker_arg = {}
     if speaker_path is None:
       speaker_arg['speaker'] = 'Claribel Dervla'
@@ -36,7 +38,7 @@ class TextToSpeech:
       speaker_arg['speaker_wav'] = str(speaker_path)
 
     wav = disable_print(
-      TextToSpeech.model.tts,
+      self._model.tts,
       text,
       language=language,
       **speaker_arg

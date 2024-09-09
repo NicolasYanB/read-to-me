@@ -16,7 +16,7 @@ def catch_error(view: Callable) -> Callable:
     try:
       return view(request)
     except Exception as e:
-      if os.environ('DEBUG') == 1:
+      if os.environ.get('DEBUG') == '1':
         print(traceback.format_exc())
       else:
         print(str(e))

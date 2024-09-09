@@ -17,6 +17,8 @@ class SpeakerHandler:
       raise UnsupportedFileException('Parameter does not correspond to a .wav binary data')
     
     path = STATIC_PATH.joinpath('speakers')
+    if not path.exists():
+      os.makedirs(path)
     file_id = str(uuid1())
     filename = f'{file_id}_{name}.wav'
     file_path = path / filename
