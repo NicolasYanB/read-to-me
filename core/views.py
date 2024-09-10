@@ -23,15 +23,7 @@ def catch_error(view: Callable) -> Callable:
       return HttpResponse(status=500)
   return catch
 
-def cors_header(view: Callable) -> Callable:
-  def add_cors_header(request: HttpRequest):
-    response = view(request)
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    return response
-  return add_cors_header
-
 @require_http_methods(['GET'])
-@cors_header
 @catch_error
 def extract(request: HttpRequest):
   url = request.GET.get('url')
@@ -45,7 +37,6 @@ def extract(request: HttpRequest):
   
 @require_http_methods(['POST'])
 @csrf_exempt
-@cors_header
 @catch_error
 def generate(request: HttpRequest):
   content = request.POST.get('content')

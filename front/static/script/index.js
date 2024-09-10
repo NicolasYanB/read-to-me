@@ -1,4 +1,3 @@
-const host = 'http://localhost:8000';
 let audio_file = null;
 
 window.onload = () => {
