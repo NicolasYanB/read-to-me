@@ -1,5 +1,9 @@
 # Read to me
 A website to transform any text you want into any voice you want
+# Made with
+- Django
+- Hugging face
+- coqui XTTS
 # How it works
 You can upload an wav audio with a little more than 5 seconds with someone talking, then you type the text you want to hear into the text area, then click in the 'generate' button,
 after that you will receive an audio with the content you wrote with the voice you uploaded.
